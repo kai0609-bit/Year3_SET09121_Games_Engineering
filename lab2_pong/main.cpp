@@ -1,11 +1,9 @@
 #include <SFML/Graphics.hpp>
 #include <string>
 
-const sf::Keyboard::Key controls[4] = {
+const sf::Keyboard::Key controls[2] = {
   sf::Keyboard::A, // Player1 UP
   sf::Keyboard::Z, // Player1 Down
-  sf::Keyboard::Up, // Player2 UP
-  sf::Keyboard::Down, // Player2 Down
 };
 
 // Parameters
@@ -23,6 +21,7 @@ sf::RectangleShape paddles[2];
 
 sf::Vector2f ballVelocity;
 bool isPlayer1Serving = true;
+bool isTwoPlayer = false;
 const float initialVelocityX = 100.f;  // horizontal velocity
 const float initialVelocityY = 60.f;   // vertical velocity
 const float velocityMultiplier = 1.1f; // speed up 10% per bounce
@@ -76,15 +75,27 @@ void update(float dt) {
   }
   paddles[0].move(sf::Vector2f(0.f, direction * paddleSpeed * dt));
 
-  // player 2 paddle movement
-  float direction2 = 0.0f;
-  if (sf::Keyboard::isKeyPressed(controls[2])) {
-    direction2--;
+  if (isTwoPlayer) {
+    float direction2 = 0.0f;
+    if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up)) {
+      direction2--;
+    }
+    if (sf::Keyboard::isKeyPressed(sf::Keyboard::Down)) {
+      direction2++;
+    }
+    paddles[1].move(sf::Vector2f(0.f, direction2 * paddleSpeed * dt));
+  } else {
+    // player 2 paddle follows the ball
+    const float paddleDifference = ball.getPosition().y - paddles[1].getPosition().y;
+    const float maxPaddleMove = paddleSpeed * dt;
+    float paddleMove = paddleDifference;
+    if (paddleMove > maxPaddleMove) {
+      paddleMove = maxPaddleMove;
+    } else if (paddleMove < -maxPaddleMove) {
+      paddleMove = -maxPaddleMove;
+    }
+    paddles[1].move(sf::Vector2f(0.f, paddleMove));
   }
-  if (sf::Keyboard::isKeyPressed(controls[3])) {
-    direction2++;
-  }
-  paddles[1].move(sf::Vector2f(0.f, direction2 * paddleSpeed * dt));
 
   // keep paddles on screen
   for (sf::RectangleShape &p : paddles) {
@@ -168,6 +179,12 @@ int main() {
         while (window.pollEvent(event)) {
             if (event.type == sf::Event::Closed) {
                 window.close();
+            } else if (event.type == sf::Event::KeyPressed) {
+                if (event.key.code == sf::Keyboard::Num1) {
+                    isTwoPlayer = false;
+                } else if (event.key.code == sf::Keyboard::Num2) {
+                    isTwoPlayer = true;
+                }
             }
         }
         if (sf::Keyboard::isKeyPressed(sf::Keyboard::Escape)) {
