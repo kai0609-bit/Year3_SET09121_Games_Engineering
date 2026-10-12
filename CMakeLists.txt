@@ -30,7 +30,10 @@ add_custom_command(TARGET lab2_pong POST_BUILD
   ${CMAKE_SOURCE_DIR}/resources $<TARGET_FILE_DIR:lab2_pong>/resources)
 
 #### Practical 3: Space Invaders
-add_executable(lab3_spaceInvaders lab3_spaceInvaders/main.cpp)
+add_executable(lab3_spaceInvaders lab3_spaceInvaders/main.cpp
+  lab3_spaceInvaders/game_parameters.hpp
+  lab3_spaceInvaders/game_system.hpp
+  lab3_spaceInvaders/game_system.cpp)
 target_include_directories(lab3_spaceInvaders PRIVATE ${SFML_INCS})
 target_link_libraries(lab3_spaceInvaders sfml-graphics)
 add_custom_command(TARGET lab3_spaceInvaders POST_BUILD

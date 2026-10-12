@@ -2,26 +2,12 @@
 #include <iostream>
 
 #include "game_parameters.hpp"
+#include "game_system.hpp"
 
-// Objects of the game
-sf::Texture spritesheet;
-sf::Sprite invader;
-
-void init() {
-    if (!spritesheet.loadFromFile("resources/img/invaders_sheet.png")) {
-        std::cerr << "Failed to load spritesheet!" << std::endl;
-    }
-    invader.setTexture(spritesheet);
-    invader.setTextureRect(sf::IntRect(sf::Vector2i(0, 0), sf::Vector2i(Parameters::sprite_size, Parameters::sprite_size)));
-}
-
-void render(sf::RenderWindow &window) {
-    window.draw(invader);
-}
 
 int main() {
     sf::RenderWindow window(sf::VideoMode(Parameters::game_width, Parameters::game_height), "Space-Invaders");
-    init();
+    GameSystem::init();
     sf::Clock clock;
     while (window.isOpen()) {
         const float dt = clock.restart().asSeconds();
@@ -36,9 +22,11 @@ int main() {
             window.close();
         }
 
+        GameSystem::update(dt);
         window.clear();
-        render(window);
+        GameSystem::render(window);
         window.display();
     }
+    GameSystem::clean();
     return 0;
 }
