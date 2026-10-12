@@ -1,9 +1,7 @@
 #include <SFML/Graphics.hpp>
 #include <iostream>
 
-// Parameters
-const int gameWidth = 800;
-const int gameHeight = 600;
+#include "game_parameters.hpp"
 
 // Objects of the game
 sf::Texture spritesheet;
@@ -14,7 +12,7 @@ void init() {
         std::cerr << "Failed to load spritesheet!" << std::endl;
     }
     invader.setTexture(spritesheet);
-    invader.setTextureRect(sf::IntRect(sf::Vector2i(0, 0), sf::Vector2i(32, 32)));
+    invader.setTextureRect(sf::IntRect(sf::Vector2i(0, 0), sf::Vector2i(Parameters::sprite_size, Parameters::sprite_size)));
 }
 
 void render(sf::RenderWindow &window) {
@@ -22,7 +20,7 @@ void render(sf::RenderWindow &window) {
 }
 
 int main() {
-    sf::RenderWindow window(sf::VideoMode(gameWidth, gameHeight), "Space-Invaders");
+    sf::RenderWindow window(sf::VideoMode(Parameters::game_width, Parameters::game_height), "Space-Invaders");
     init();
     sf::Clock clock;
     while (window.isOpen()) {
