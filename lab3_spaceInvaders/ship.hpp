@@ -1,0 +1,18 @@
+#pragma once
+
+#include <SFML/Graphics.hpp>
+
+class Ship : public sf::Sprite {
+public:
+    Ship();
+    // Copy constructor
+    Ship(const Ship &s);
+    // Constructor that takes a sprite
+    Ship(sf::IntRect ir);
+    // Pure virtual deconstructor -- makes this an abstract class and avoids undefined behabiour
+    virtual ~Ship() = 0;
+    // Update, virtual so can be overriden, but not pure virtual 
+    virtual void update(const float &dt);
+protected:
+    sf::IntRect _sprite;
+};
