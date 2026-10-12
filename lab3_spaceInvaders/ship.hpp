@@ -16,3 +16,11 @@ public:
 protected:
     sf::IntRect _sprite;
 };
+
+class Invader : public Ship {
+public:
+    Invader();
+    Invader(const Invader& inv);
+    Invader(sf::IntRect ir, sf::Vector2f pos);
+    void update(const float &dt) override;
+};

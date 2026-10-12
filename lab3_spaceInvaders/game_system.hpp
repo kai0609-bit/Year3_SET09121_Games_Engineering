@@ -10,7 +10,6 @@ struct GameSystem {
     // The global variables
     static std::vector<std::shared_ptr<Ship>> ships;
     static sf::Texture spritesheet;
-    static sf::Sprite invader;
 
     // game system function
     static void init();
