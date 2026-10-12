@@ -2,7 +2,7 @@ cmake_minimum_required(VERSION 3.11)
 project(setup)
 
 # Require modern C++
-set(CMAKE_CXX_STANDARD 14)
+set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 #### Setup Directories ####
@@ -33,6 +33,9 @@ add_custom_command(TARGET lab2_pong POST_BUILD
 add_executable(lab3_spaceInvaders lab3_spaceInvaders/main.cpp)
 target_include_directories(lab3_spaceInvaders PRIVATE ${SFML_INCS})
 target_link_libraries(lab3_spaceInvaders sfml-graphics)
+add_custom_command(TARGET lab3_spaceInvaders POST_BUILD
+  COMMAND ${CMAKE_COMMAND} -E copy_directory
+  ${CMAKE_SOURCE_DIR}/resources $<TARGET_FILE_DIR:lab3_spaceInvaders>/resources)
 
 #### Practical 4: Tile Engine
 add_executable(lab4_tileEngine lab4_tileEngine/main.cpp
