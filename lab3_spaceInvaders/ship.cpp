@@ -15,6 +15,7 @@ Ship::Ship(sf::IntRect ir) : Sprite() {
 }
 
 void Ship::update(const float &dt) {}
+void Ship::move_down() {}
 
 // Define the ship deconstructor
 // Although we set this pure virtual, we still have to define it
@@ -22,6 +23,7 @@ Ship::~Ship() = default;
 
 bool Invader::direction;
 float Invader::speed;
+float Invader::acc;
 
 Invader::Invader() : Ship() {}
 Invader::Invader(const Invader &inv): Ship(inv) {}
@@ -38,5 +40,13 @@ void Invader::update(const float &dt) {
     if ((direction && getPosition().x > Parameters::game_width - Parameters::sprite_size/2.f) || 
         (!direction && getPosition().x < Parameters::sprite_size/2.f)) {
             direction = !direction;
+            speed += Invader::acc;
+            for (std::shared_ptr<Ship> &ship: GameSystem::ships) {
+					 ship->move_down();
+            }
         }
+}
+
+void Invader::move_down() {
+    move(0.f, Parameters::invader_move_down);
 }

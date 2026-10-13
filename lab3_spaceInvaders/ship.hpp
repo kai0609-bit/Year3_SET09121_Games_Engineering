@@ -13,6 +13,8 @@ public:
     virtual ~Ship() = 0;
     // Update, virtual so can be overriden, but not pure virtual 
     virtual void update(const float &dt);
+
+    virtual void move_down();
 protected:
     sf::IntRect _sprite;
 };
@@ -21,8 +23,10 @@ class Invader : public Ship {
 public:
     static bool direction;
     static float speed;
+    static float acc;
     Invader();
     Invader(const Invader& inv);
     Invader(sf::IntRect ir, sf::Vector2f pos);
     void update(const float &dt) override;
+    void move_down() override;
 };

@@ -14,6 +14,7 @@ void GameSystem::init() {
 
     Invader::direction = true;
     Invader::speed = Parameters::invader_speed;
+    Invader::acc = Parameters::invader_acc;
 
     for (int i = 0; i < Parameters::rows; i++) {
         const sf::IntRect sprite_rect(
