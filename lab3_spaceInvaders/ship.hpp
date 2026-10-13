@@ -30,3 +30,9 @@ public:
     void update(const float &dt) override;
     void move_down() override;
 };
+
+class Player : public Ship {
+public:
+    Player();
+    void update(const float &dt) override;
+};

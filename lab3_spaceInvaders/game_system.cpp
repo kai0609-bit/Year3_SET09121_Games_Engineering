@@ -16,6 +16,9 @@ void GameSystem::init() {
     Invader::speed = Parameters::invader_speed;
     Invader::acc = Parameters::invader_acc;
 
+    std::shared_ptr<Player> player = std::make_shared<Player>();
+    ships.push_back(player);
+
     for (int i = 0; i < Parameters::rows; i++) {
         const sf::IntRect sprite_rect(
             sf::Vector2i(i/2 * 2 * Parameters::sprite_size, 0),

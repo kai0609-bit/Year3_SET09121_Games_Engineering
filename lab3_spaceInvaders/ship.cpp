@@ -50,3 +50,35 @@ void Invader::update(const float &dt) {
 void Invader::move_down() {
     move(0.f, Parameters::invader_move_down);
 }
+
+Player::Player() : 
+Ship(sf::IntRect(sf::Vector2i(Parameters::sprite_size*5, Parameters::sprite_size), sf::Vector2i(Parameters::sprite_size, Parameters::sprite_size))) {
+    setOrigin(Parameters::sprite_size/2.f, Parameters::sprite_size/2.f);
+    setPosition(Parameters::game_width/2.f, Parameters::game_height - static_cast<float>(Parameters::sprite_size));
+}
+
+void Player::update(const float &dt) {
+    Ship::update(dt);
+
+    float player_direction = 0.f;
+    // Move left
+    if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left) || sf::Keyboard::isKeyPressed(sf::Keyboard::A)) {
+        player_direction --;
+    }
+
+    // Move right
+    if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right) || sf::Keyboard::isKeyPressed(sf::Keyboard::D)) {
+        player_direction ++;
+    }
+
+    move(player_direction * dt * Parameters::player_speed, 0.f);
+
+    const float half_width = Parameters::sprite_size / 2.f;
+    const float min_x = half_width;
+    const float max_x = Parameters::game_width - half_width;
+    if (getPosition().x < min_x) {
+        setPosition(min_x, getPosition().y);
+    } else if (getPosition().x > max_x) {
+        setPosition(max_x, getPosition().y);
+    }
+}
