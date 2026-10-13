@@ -12,8 +12,19 @@ void GameSystem::init() {
         std::cerr << "Failed to load spritesheet!" << std::endl;
     }
 
-    std::shared_ptr<Invader> inv = std::make_shared<Invader>(sf::IntRect(sf::Vector2i(0, 0), sf::Vector2i(Parameters::sprite_size, Parameters::sprite_size)), sf::Vector2f(100.f, 100.f));
-    ships.push_back(inv);
+    for (int i = 0; i < Parameters::rows; i++) {
+        const sf::IntRect sprite_rect(
+            sf::Vector2i(i/2 * 2 * Parameters::sprite_size, 0),
+            sf::Vector2i(Parameters::sprite_size, Parameters::sprite_size)
+        );
+        for (int j = 0; j < Parameters::columns; j++) {
+            const float x = static_cast<float>(Parameters::invader_space_left) + static_cast<float>(j) * static_cast<float>(Parameters::invader_spacing_x);
+            const float y = static_cast<float>(Parameters::invader_space_top) + static_cast<float>(i) * static_cast<float>(Parameters::invader_spacing_y);
+            std::shared_ptr<Invader> inv = std::make_shared<Invader>(sprite_rect, sf::Vector2f(x, y));
+            ships.push_back(inv);
+        }
+    }
+    
 }
 
 void GameSystem::clean() {
