@@ -12,6 +12,9 @@ void GameSystem::init() {
         std::cerr << "Failed to load spritesheet!" << std::endl;
     }
 
+    Invader::direction = true;
+    Invader::speed = Parameters::invader_speed;
+
     for (int i = 0; i < Parameters::rows; i++) {
         const sf::IntRect sprite_rect(
             sf::Vector2i(i/2 * 2 * Parameters::sprite_size, 0),

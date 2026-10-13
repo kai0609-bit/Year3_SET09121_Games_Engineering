@@ -20,6 +20,9 @@ void Ship::update(const float &dt) {}
 // Although we set this pure virtual, we still have to define it
 Ship::~Ship() = default;
 
+bool Invader::direction;
+float Invader::speed;
+
 Invader::Invader() : Ship() {}
 Invader::Invader(const Invader &inv): Ship(inv) {}
 Invader::Invader(sf::IntRect ir, sf::Vector2f pos) : Ship(ir) {
@@ -29,4 +32,11 @@ Invader::Invader(sf::IntRect ir, sf::Vector2f pos) : Ship(ir) {
 
 void Invader::update(const float &dt) {
     Ship::update(dt);
+
+    move(dt * (direction ? 1.0f : -1.0f) * speed, 0.0f);
+
+    if ((direction && getPosition().x > Parameters::game_width - Parameters::sprite_size/2.f) || 
+        (!direction && getPosition().x < Parameters::sprite_size/2.f)) {
+            direction = !direction;
+        }
 }

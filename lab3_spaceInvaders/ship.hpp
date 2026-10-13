@@ -19,6 +19,8 @@ protected:
 
 class Invader : public Ship {
 public:
+    static bool direction;
+    static float speed;
     Invader();
     Invader(const Invader& inv);
     Invader(sf::IntRect ir, sf::Vector2f pos);

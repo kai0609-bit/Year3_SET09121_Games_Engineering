@@ -10,4 +10,5 @@ struct Parameters {
     static constexpr int invader_spacing_y = 40;
     static constexpr int invader_space_left = 100;
     static constexpr int invader_space_top = 50;
+    static constexpr float invader_speed = 20.f;
 };
