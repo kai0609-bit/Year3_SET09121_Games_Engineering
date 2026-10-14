@@ -9,9 +9,10 @@
 
 int main() {
     sf::RenderWindow window(sf::VideoMode(Parameters::game_width, Parameters::game_height), "Space-Invaders");
+    srand(static_cast<unsigned>(time(nullptr)));
     GameSystem::init();
     sf::Clock clock;
-    srand(static_cast<unsigned>(time(nullptr)));
+    
     while (window.isOpen()) {
         const float dt = clock.restart().asSeconds();
 
