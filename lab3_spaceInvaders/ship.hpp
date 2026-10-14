@@ -34,6 +34,9 @@ public:
     Invader(sf::IntRect ir, sf::Vector2f pos);
     void update(const float &dt) override;
     void move_down() override;
+protected:
+    float _firetime = 0.f;
+    float _explode_timer;
 };
 
 class Player : public Ship {

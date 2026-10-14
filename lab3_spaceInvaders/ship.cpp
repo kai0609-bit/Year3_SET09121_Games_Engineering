@@ -1,3 +1,5 @@
+#include <cstdlib>
+
 #include "ship.hpp"
 #include "game_system.hpp"
 #include "game_parameters.hpp"
@@ -45,6 +47,9 @@ Invader::Invader(sf::IntRect ir, sf::Vector2f pos) : Ship(ir) {
 void Invader::update(const float &dt) {
     Ship::update(dt);
 
+    if (_exploded) return;
+    _firetime -= dt;
+
     move(dt * (direction ? 1.0f : -1.0f) * speed, 0.0f);
 
     if ((direction && getPosition().x > Parameters::game_width - Parameters::sprite_size/2.f) || 
@@ -54,7 +59,12 @@ void Invader::update(const float &dt) {
             for (std::shared_ptr<Ship> &ship: GameSystem::ships) {
 					 ship->move_down();
             }
-        }
+    }
+
+    if (_firetime <= 0 && rand() % 100 == 0) {
+      Bullet::fire(getPosition(), false);
+      _firetime = Parameters::invader_fire_cooldown + (rand() % 60);
+    }
 }
 
 void Invader::move_down() {
