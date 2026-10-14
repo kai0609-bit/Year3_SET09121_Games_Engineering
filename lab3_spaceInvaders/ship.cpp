@@ -47,7 +47,14 @@ Invader::Invader(sf::IntRect ir, sf::Vector2f pos) : Ship(ir) {
 void Invader::update(const float &dt) {
     Ship::update(dt);
 
-    if (_exploded) return;
+    if (_exploded) {
+        _explode_timer -= dt;
+        if (_explode_timer < 0) {
+            setColor(sf::Color(255, 255, 255, 0));
+            return;
+        }
+    }
+    
     _firetime -= dt;
 
     move(dt * (direction ? 1.0f : -1.0f) * speed, 0.0f);
@@ -61,7 +68,7 @@ void Invader::update(const float &dt) {
             }
     }
 
-    if (_firetime <= 0 && rand() % 100 == 0) {
+    if (!_exploded && _firetime <= 0 && rand() % 100 == 0) {
       Bullet::fire(getPosition(), false);
       _firetime = Parameters::invader_fire_cooldown + (rand() % 60);
     }
@@ -69,6 +76,12 @@ void Invader::update(const float &dt) {
 
 void Invader::move_down() {
     move(0.f, Parameters::invader_move_down);
+}
+
+void Invader::explode() {
+    Ship::explode();
+    speed += Parameters::invader_kill_acc;
+    _explode_timer = Parameters::invader_fade_time;
 }
 
 Player::Player() : 
