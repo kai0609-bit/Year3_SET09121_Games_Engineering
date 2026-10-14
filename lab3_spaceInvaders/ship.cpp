@@ -58,8 +58,12 @@ Ship(sf::IntRect(sf::Vector2i(Parameters::sprite_size*5, Parameters::sprite_size
     setPosition(Parameters::game_width/2.f, Parameters::game_height - static_cast<float>(Parameters::sprite_size));
 }
 
+float Player::_firetime = 0;
+
 void Player::update(const float &dt) {
     Ship::update(dt);
+
+    _firetime -= dt;
 
     float player_direction = 0.f;
     // Move left
@@ -84,7 +88,10 @@ void Player::update(const float &dt) {
     }
 
     // Fire bullet
-    if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space)) {
+    if (_firetime <= 0 && sf::Keyboard::isKeyPressed(sf::Keyboard::Space)) {
         Bullet::fire(getPosition(), true);
+        _firetime = Parameters::cooldown_time;
     }
 }
+
+

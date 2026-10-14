@@ -35,4 +35,6 @@ class Player : public Ship {
 public:
     Player();
     void update(const float &dt) override;
+protected:
+    static float _firetime;
 };

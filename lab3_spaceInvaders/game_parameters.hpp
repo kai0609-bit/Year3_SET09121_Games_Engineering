@@ -15,4 +15,5 @@ struct Parameters {
     static constexpr float invader_move_down = 24.f;  
     static constexpr float player_speed = 200.f;
     static constexpr float bullet_speed = 200.f;
+    static constexpr float cooldown_time = 0.7f;
 };
