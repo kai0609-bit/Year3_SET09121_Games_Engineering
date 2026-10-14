@@ -1,6 +1,7 @@
 #include "ship.hpp"
 #include "game_system.hpp"
 #include "game_parameters.hpp"
+#include "bullet.hpp"
 
 Ship::Ship() {}
 
@@ -80,5 +81,10 @@ void Player::update(const float &dt) {
         setPosition(min_x, getPosition().y);
     } else if (getPosition().x > max_x) {
         setPosition(max_x, getPosition().y);
+    }
+
+    // Fire bullet
+    if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space)) {
+        Bullet::fire(getPosition(), true);
     }
 }

@@ -3,6 +3,7 @@
 
 #include "game_system.hpp"
 #include "game_parameters.hpp"
+#include "bullet.hpp"
 
 sf::Texture GameSystem::spritesheet;
 std::vector<std::shared_ptr<Ship>> GameSystem::ships;
@@ -11,6 +12,8 @@ void GameSystem::init() {
     if (!spritesheet.loadFromFile("resources/img/invaders_sheet.png")) {
         std::cerr << "Failed to load spritesheet!" << std::endl;
     }
+
+    Bullet::init();
 
     Invader::direction = true;
     Invader::speed = Parameters::invader_speed;
@@ -45,10 +48,12 @@ void GameSystem::update(const float &dt) {
     for (std::shared_ptr<Ship> &s : ships) {
         s->update(dt);
     }
+    Bullet::update(dt);
 }
 
 void GameSystem::render(sf::RenderWindow &window) {
     for (const std::shared_ptr<Ship> &s : ships) {
         window.draw(*(s.get()));
     }
+    Bullet::render(window);
 }
