@@ -12,7 +12,11 @@ void GameSystem::init() {
     if (!spritesheet.loadFromFile("resources/img/invaders_sheet.png")) {
         std::cerr << "Failed to load spritesheet!" << std::endl;
     }
+    reset();
+}
 
+void GameSystem::reset() {
+    clean();
     Bullet::init();
 
     Invader::direction = true;
@@ -34,7 +38,6 @@ void GameSystem::init() {
             ships.push_back(inv);
         }
     }
-    
 }
 
 void GameSystem::clean() {
@@ -49,6 +52,10 @@ void GameSystem::update(const float &dt) {
         s->update(dt);
     }
     Bullet::update(dt);
+
+    if (ships[0] -> is_exploded()) {
+        reset();
+    }
 }
 
 void GameSystem::render(sf::RenderWindow &window) {

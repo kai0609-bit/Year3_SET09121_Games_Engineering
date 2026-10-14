@@ -90,7 +90,7 @@ Ship(sf::IntRect(sf::Vector2i(Parameters::sprite_size*5, Parameters::sprite_size
     setPosition(Parameters::game_width/2.f, Parameters::game_height - static_cast<float>(Parameters::sprite_size));
 }
 
-float Player::_firetime = 0;
+float Player::_firetime = 0.f;
 
 void Player::update(const float &dt) {
     Ship::update(dt);
