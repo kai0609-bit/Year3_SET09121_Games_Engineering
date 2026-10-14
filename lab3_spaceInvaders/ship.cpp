@@ -18,9 +18,18 @@ Ship::Ship(sf::IntRect ir) : Sprite() {
 void Ship::update(const float &dt) {}
 void Ship::move_down() {}
 
+void Ship::explode() {
+    setTextureRect(sf::IntRect(sf::Vector2i(Parameters::sprite_size * 4, Parameters::sprite_size), sf::Vector2i(Parameters::sprite_size, Parameters::sprite_size)));
+    _exploded = true;
+}
+
 // Define the ship deconstructor
 // Although we set this pure virtual, we still have to define it
 Ship::~Ship() = default;
+
+bool Ship::is_exploded() const {
+  return _exploded;
+}
 
 bool Invader::direction;
 float Invader::speed;

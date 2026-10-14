@@ -43,5 +43,25 @@ void Bullet::_update(const float &dt) {
         return;
     } else {
         move(sf::Vector2f(0, dt * Parameters::bullet_speed * (_mode ? -1.0f : 1.0f)));
+        const sf::FloatRect bounding_box = getGlobalBounds();
+        std::shared_ptr<Ship> &player = GameSystem::ships[0];
+        for (std::shared_ptr<Ship> &s : GameSystem::ships) {
+            if (_mode && s == player) {
+                //player bullets don't collide with player
+                continue;
+            }
+            if (!_mode && s != player) {
+                //invader bullets don't collide with other invaders
+                continue;
+            }
+            if (!s->is_exploded() && 
+                s->getGlobalBounds().intersects(bounding_box)) {
+                  //Explode the ship
+                  s->explode();
+                  //warp bullet off-screen
+				  setPosition(sf::Vector2f(-100, -100));
+                  return;
+            }
+        }
     }
 }
