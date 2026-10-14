@@ -37,11 +37,16 @@ bool Invader::direction;
 float Invader::speed;
 float Invader::acc;
 
+float Invader::_random_fire_time() {
+    return Parameters::invader_fire_cooldown + (rand() % Parameters::invader_fire_random);
+}
+
 Invader::Invader() : Ship() {}
 Invader::Invader(const Invader &inv): Ship(inv) {}
 Invader::Invader(sf::IntRect ir, sf::Vector2f pos) : Ship(ir) {
     setOrigin(sf::Vector2f(Parameters::sprite_size / 2.f, Parameters::sprite_size / 2.f));
     setPosition(pos);
+    _firetime = _random_fire_time();
 }
 
 void Invader::update(const float &dt) {
@@ -69,8 +74,8 @@ void Invader::update(const float &dt) {
     }
 
     if (!_exploded && _firetime <= 0 && rand() % 100 == 0) {
-      Bullet::fire(getPosition(), false);
-      _firetime = Parameters::invader_fire_cooldown + (rand() % 60);
+        Bullet::fire(getPosition(), false);
+        _firetime = _random_fire_time();
     }
 }
 
@@ -88,6 +93,7 @@ Player::Player() :
 Ship(sf::IntRect(sf::Vector2i(Parameters::sprite_size*5, Parameters::sprite_size), sf::Vector2i(Parameters::sprite_size, Parameters::sprite_size))) {
     setOrigin(Parameters::sprite_size/2.f, Parameters::sprite_size/2.f);
     setPosition(Parameters::game_width/2.f, Parameters::game_height - static_cast<float>(Parameters::sprite_size));
+    _firetime = 0.f;
 }
 
 float Player::_firetime = 0.f;

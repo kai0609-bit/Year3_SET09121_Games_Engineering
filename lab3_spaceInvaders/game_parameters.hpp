@@ -14,6 +14,7 @@ struct Parameters {
     static constexpr float invader_acc = 5.f;
     static constexpr float invader_kill_acc = 3.f;
     static constexpr float invader_fire_cooldown = 3.f;
+    static constexpr int invader_fire_random = 60;
     static constexpr float invader_fade_time = 1.f;
     static constexpr float invader_move_down = 24.f;  
     static constexpr float player_speed = 200.f;

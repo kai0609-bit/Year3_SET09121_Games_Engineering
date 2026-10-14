@@ -1,5 +1,7 @@
 #include <SFML/Graphics.hpp>
 #include <iostream>
+#include <cstdlib>
+#include <ctime>
 
 #include "game_parameters.hpp"
 #include "game_system.hpp"
@@ -9,6 +11,7 @@ int main() {
     sf::RenderWindow window(sf::VideoMode(Parameters::game_width, Parameters::game_height), "Space-Invaders");
     GameSystem::init();
     sf::Clock clock;
+    srand(static_cast<unsigned>(time(nullptr)));
     while (window.isOpen()) {
         const float dt = clock.restart().asSeconds();
 

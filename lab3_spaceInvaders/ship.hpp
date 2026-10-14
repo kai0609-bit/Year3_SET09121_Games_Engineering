@@ -38,6 +38,7 @@ public:
 protected:
     float _firetime = 0.f;
     float _explode_timer = 0.f;
+    static float _random_fire_time();
 };
 
 class Player : public Ship {
