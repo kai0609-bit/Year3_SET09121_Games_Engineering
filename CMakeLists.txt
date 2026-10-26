@@ -12,9 +12,15 @@ SET(OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/bin/")
 SET(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${OUTPUT_DIRECTORY})
 
 #### Add External Dependencies ####
+# SFML - Simple and Fast Multimedia Library
 add_subdirectory("lib/SFML")
 set(SFML_INCS "lib/SFML/include")
 link_directories("${CMAKE_BINARY_DIR}/lib/SFML/lib")
+
+# B2D - Box2D physics library
+add_subdirectory("lib/box2d")
+set(B2D_INCS "lib/box2d/include")
+link_dirctries("${CMAKE_BINARY_DIR}/lib/box2d/lib")
 
 #### Practical 1 ####
 add_executable(lab1_tutorial lab1_tutorial/main.cpp)
@@ -50,3 +56,11 @@ add_executable(lab4_tileEngine lab4_tileEngine/main.cpp
     lab4_tileEngine/game_system.cpp)
 target_include_directories(lab4_tileEngine PRIVATE ${SFML_INCS})
 target_link_libraries(lab4_tileEngine sfml-graphics)
+
+#### Practical 5: Pacman
+
+#### Practical 6: Physics
+add_executable(lab6_physics lab6_physics/main.cpp)
+target_include_directories(lab6_physics SYSTEM PRIVATE ${SFML_INCS} ${B@D_INCS})
+target_link_libraries(lab6_physics Box2D sfml-graphics)
+set(EXECUTABLE ${EXECUTABLES} PRACTICAL_6_PHYSICS)
